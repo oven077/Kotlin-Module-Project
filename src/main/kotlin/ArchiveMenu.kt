@@ -5,6 +5,8 @@ class ArchiveMenu(scanner: Scanner) : Menu(scanner) {
         items.add(Item(0, "Вернуться назад", ::goBack)) // Добавляем пункт "Вернуться назад"
         items.add(Item(1, "Создать архив", ::createArchive))
         items.add(Item(2, "Просмотр архива", ::viewArchives))
+        items.add(Item(3, "Создать заметку", ::createNote))
+
     }
 
     private fun createArchive(archives: HashMap<String, HashMap<String, String>>) {
@@ -16,9 +18,11 @@ class ArchiveMenu(scanner: Scanner) : Menu(scanner) {
                 println("Архив '$archiveName' создан.")
             } else {
                 println("Архив с таким именем уже существует.")
+                goBack(archives)
             }
         } else {
             println("Имя архива не может быть пустым.")
+            goBack(archives)
         }
         goBack(archives) // Добавляем возврат в главное меню после создания архива
     }
@@ -43,6 +47,7 @@ class ArchiveMenu(scanner: Scanner) : Menu(scanner) {
             }
         } catch (e: NumberFormatException) {
             println("Пожалуйста, введите целое число.")
+            goBack(archives)
         }
     }
 
@@ -56,4 +61,27 @@ class ArchiveMenu(scanner: Scanner) : Menu(scanner) {
             println("Архив с таким именем не найден.")
         }
     }
+
+    private fun createNote(archives: HashMap<String, HashMap<String, String>>) {
+        print("Введите название архива: ")
+        val archiveName = scanner.nextLine().trim()
+        if (archiveName.isNotEmpty() && archives.containsKey(archiveName)) {
+            print("Введите заголовок заметки: ")
+            val noteTitle = scanner.nextLine().trim()
+            print("Введите текст заметки: ")
+            val noteContent = scanner.nextLine().trim()
+
+            if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                archives[archiveName]!![noteTitle] = noteContent
+                println("Заметка '$noteTitle' создана.")
+            } else {
+                println("Заголовок или текст заметки не могут быть пустыми.")
+            }
+        } else {
+            println("Архив с таким именем не найден или название архива пустое.")
+        }
+        goBack(archives) // Добавляем возврат в главное меню после создания заметки
+    }
+
+
 }

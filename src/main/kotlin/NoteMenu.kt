@@ -9,20 +9,24 @@ class NoteMenu(scanner: Scanner, private val archives: HashMap<String, HashMap<S
 
     private fun createNote(archives: HashMap<String, HashMap<String, String>>) {
         print("Введите название архива: ")
-        val archiveName = scanner.nextLine()
-        if (archives.containsKey(archiveName)) {
+        val archiveName = scanner.nextLine().trim()
+        if (archiveName.isNotEmpty() && archives.containsKey(archiveName)) {
             print("Введите заголовок заметки: ")
-            val noteTitle = scanner.nextLine()
+            val noteTitle = scanner.nextLine().trim()
             print("Введите текст заметки: ")
-            val noteContent = scanner.nextLine()
+            val noteContent = scanner.nextLine().trim()
+
             if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
                 archives[archiveName]!![noteTitle] = noteContent
                 println("Заметка '$noteTitle' создана.")
             } else {
                 println("Заголовок или текст заметки не могут быть пустыми.")
+                goBack(archives)
             }
         } else {
-            println("Архив с таким именем не найден.")
+            println("Архив с таким именем не найден или название архива пустое.")
+            goBack(archives)
+
         }
     }
 
@@ -31,8 +35,12 @@ class NoteMenu(scanner: Scanner, private val archives: HashMap<String, HashMap<S
         val archiveName = scanner.nextLine()
         if (archives.containsKey(archiveName)) {
             viewNotesInArchive(archiveName, archives)
+            goBack(archives)
+
         } else {
             println("Архив с таким именем не найден.")
+            goBack(archives)
+
         }
     }
 
@@ -41,8 +49,12 @@ class NoteMenu(scanner: Scanner, private val archives: HashMap<String, HashMap<S
             val notes = archives[archiveName]!!
             println("Список заметок в архиве $archiveName:")
             notes.forEach { (title, content) -> println("Заголовок: $title, Содержание: $content") }
+            goBack(archives)
+
         } else {
             println("Архив с таким именем не найден.")
+            goBack(archives)
+
         }
     }
 }

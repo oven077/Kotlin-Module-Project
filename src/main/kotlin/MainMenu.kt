@@ -10,6 +10,7 @@ class MainMenu(scanner: Scanner) : Menu(scanner) {
 
 
     private fun goExit(archives: HashMap<String, HashMap<String, String>>) {
+        println("До свидания!")
         System.exit(1)
     }
 
