@@ -11,7 +11,7 @@ class ArchiveMenu(scanner: Scanner) : Menu(scanner) {
 
     private fun createArchive(archives: HashMap<String, HashMap<String, String>>) {
         print("Введите название архива: ")
-        val archiveName = scanner.nextLine()
+        val archiveName = scanner.nextLine().trim()
         if (archiveName.isNotEmpty()) {
             if (!archives.containsKey(archiveName)) {
                 archives[archiveName] = HashMap()

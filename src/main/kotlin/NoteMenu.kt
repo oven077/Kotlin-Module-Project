@@ -19,6 +19,7 @@ class NoteMenu(scanner: Scanner, private val archives: HashMap<String, HashMap<S
             if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
                 archives[archiveName]!![noteTitle] = noteContent
                 println("Заметка '$noteTitle' создана.")
+                goBack(archives)
             } else {
                 println("Заголовок или текст заметки не могут быть пустыми.")
                 goBack(archives)
